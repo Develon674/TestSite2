@@ -1,0 +1,13 @@
+{
+    "name": "develon674/testsite2",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "William Roberts",
+            "email": "william@buzzgraphicdesign.co.uk"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
