@@ -9,5 +9,13 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {}
+    "require": {
+        "dhii/di" : "^0.2",
+        "dhii/memoize-memory" : "^0.2"
+    },
+    "autoload" : {
+        "classmap" : [
+            "classes/"
+        ]
+    }
 }
