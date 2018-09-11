@@ -17,10 +17,11 @@ class MyPlugin {
     
     /**
      * @param WP_Term[] $categories A list of categories.
+     * @return array
     */
     protected function printCatgories($categories) {
         foreach ($categories as $category) {
-            echo $category->name;
+            echo '<p>'.$category->name.'</p>';
         }
     }
     
