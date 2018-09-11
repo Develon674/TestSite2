@@ -17,7 +17,7 @@ class MyPlugin {
     
     /**
      * @param WP_Term[] $categories A list of categories.
-     * @return array
+     * @return array Returns list of categories in array.
     */
     protected function printCategories($categories) {
         foreach ($categories as $category) {
