@@ -19,13 +19,13 @@ class MyPlugin {
      * @param WP_Term[] $categories A list of categories.
      * @return array
     */
-    protected function printCatgories($categories) {
+    protected function printCategories($categories) {
         foreach ($categories as $category) {
             echo '<p>'.$category->name.'</p>';
         }
     }
     
-    protected function getCatgories() {
+    protected function getCategories() {
         $catQuery = new WP_Term_Query([
             'taxonomy' => 'category', 
                 'hide_empty' => true,
@@ -38,8 +38,8 @@ class MyPlugin {
     }
     
     protected function getOutput() {
-        $categories = $this->getCatgories();
-        return $this->printCatgories($categories);
+        $categories = $this->getCategories();
+        return $this->printCategories($categories);
     }               
                    
 }
