@@ -26,7 +26,7 @@ class Term_Manager {
      * 
      */
     public function getTermTree(array $terms, $parentId = 0) {
-        $branch = array();
+        $branch = [];
 
         foreach ($terms as $term) {
             /* @var $term WP_Term */
