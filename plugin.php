@@ -16,7 +16,7 @@ use Develon674\TestSite2\MyPlugin;
 $cache = new MemoryMemoizer();
 $container = new CachingContainer([], $cache);
 
-$plugin = new MyPlugin();
+$plugin = new MyPlugin(__DIR__, get_stylesheet_directory());
 
 
 
