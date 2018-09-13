@@ -2,16 +2,16 @@
 
 namespace Develon674\TestSite2;
 
+use Psr\Container\ContainerInterface;
 use WP_Term;
 use WP_Term_Query;
 
 class MyPlugin {
 
-    protected $root_path;
+    protected $container;
     
-    public function __construct($root_path, $altTemplatePath) {
-        $this->root_path = $root_path;
-        $this->altTemplatePath = $altTemplatePath;
+    public function __construct(ContainerInterface $container) {
+        $this->container = $container;
     }
 
     public function run() {
@@ -25,21 +25,9 @@ class MyPlugin {
      * @return array Returns list of categories in array.
      */
     protected function printTerms($terms) {
-        echo $this->get_output('terms.php', ['terms' => $terms]);
-    }
-    
-    protected function get_output($template, $vars) {
-        extract($vars);
-        ob_start();
-        if (file_exists($template = $this->altTemplatePath.'/' . $template)) {
-            include apply_filters('template_path', $template);
-           
-        }
-        else {
-            include $this->root_path.'/templates/'.$template;
-        }
-        
-        return ob_get_clean();
+        $templateFactory = $this->container->get('template_factory');
+        $template = $templateFactory('terms');
+        echo $template->render(['terms' => $terms]);
     }
 
     protected function getTerms() {
@@ -57,7 +45,7 @@ class MyPlugin {
     
 
     protected function getOutput() {
-        $indexTerms = new Term_Manager();
+        $indexTerms = $this->container->get('term_manager');
         $terms = $this->getTerms();
         $index = $indexTerms->indexTermsById($terms);
         $tree = $indexTerms->getTermTree($index);

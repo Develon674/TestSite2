@@ -7,16 +7,19 @@
  * Text Domain: test-plugin 
  */
 
-require_once('vendor/autoload.php');
-
 use Dhii\Cache\MemoryMemoizer;
 use Dhii\Di\CachingContainer;
 use Develon674\TestSite2\MyPlugin;
 
-$cache = new MemoryMemoizer();
-$container = new CachingContainer([], $cache);
+require_once('vendor/autoload.php');
 
-$plugin = new MyPlugin(__DIR__, get_stylesheet_directory());
+$services = require('services.php');
+
+$cache = new MemoryMemoizer();
+
+$container = new CachingContainer($services(__DIR__), $cache);
+
+$plugin = new MyPlugin($container);
 
 
 
