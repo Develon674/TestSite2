@@ -3,6 +3,7 @@
 use Psr\Container\ContainerInterface;
 use Develon674\TestSite2\Template;
 use Develon674\TestSite2\Term_Manager;
+use Develon674\TestSite2\Rest_Api_Endpoints;
 
 return function(string $root_path) {
     
@@ -15,6 +16,9 @@ return function(string $root_path) {
         },
         'term_manager' => function() {
             return new Term_Manager();
+        },
+        'rest_api_endpoints' => function($terms) {
+            return new Rest_Api_Endpoints($terms);
         },
         'root_path' => $root_path,
     ];
