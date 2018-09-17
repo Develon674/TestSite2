@@ -30,19 +30,19 @@ class Products_Endpoint {
                     return $this->get_entities($request);
                 },
                 'args' => [
-                 'page' =>  [
-                     'type' => 'integer',
-                     'default' => 1,
-                     'minimum' => 1,
-                 ],
-                 'posts_per_page' => [
-                     'type' => 'integer',
-                     'default' => 2,
-                     'minimum' => 1,
-                     'maximum' => 100,
-                 ],
+                    'page' => [
+                        'type' => 'integer',
+                        'default' => 1,
+                        'minimum' => 1,
+                    ],
+                    'posts_per_page' => [
+                        'type' => 'integer',
+                        'default' => 2,
+                        'minimum' => 1,
+                        'maximum' => 100,
+                    ],
+                ],
             ],
-    ],
         ]);
     }
 
