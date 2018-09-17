@@ -9,14 +9,18 @@ use WP_Term_Query;
 class MyPlugin {
 
     protected $container;
-    
+
     public function __construct(ContainerInterface $container) {
         $this->container = $container;
     }
 
     public function run() {
         add_action('product_finder_body', function() {
-            echo $this->getOutput();
+            echo $this->printOutput();
+        });
+        add_action('rest_api_init', function() {
+            $productsEndpoint = $this->container->get('products_endpoint');
+            $productsEndpoint->register_routes();
         });
     }
 
@@ -42,15 +46,18 @@ class MyPlugin {
 
         return $terms;
     }
-    
 
     protected function getOutput() {
         $indexTerms = $this->container->get('term_manager');
         $terms = $this->getTerms();
         $index = $indexTerms->indexTermsById($terms);
         $tree = $indexTerms->getTermTree($index);
-      
-        return $this->printTerms($tree);
+        return $tree;
+    }
+
+    protected function printOutput() {
+        $output = $this->getOutput();
+        return $this->printTerms($output);
     }
 
 }

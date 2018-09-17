@@ -7,6 +7,7 @@ namespace Develon674\TestSite2;
  *
  */
 class Term_Manager {
+
     /**
      * 
      * @param WP_Term[] $terms
@@ -15,9 +16,9 @@ class Term_Manager {
     public function indexTermsById($terms) {
         $index = [];
         foreach ($terms as $term) {
-           $index[$term->term_id] = $term;
+            $index[$term->term_id] = $term;
         }
-       return $index;
+        return $index;
     }
 
     /**
@@ -41,4 +42,5 @@ class Term_Manager {
         }
         return $branch;
     }
+
 }
