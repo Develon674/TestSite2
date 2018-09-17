@@ -7,7 +7,8 @@ namespace Develon674\TestSite2;
  *
  */
 interface Template_Interface {
-     /**
+
+    /**
      * 
      * @param array $vars A map of context keys to values.
      * @return string The rendered output.

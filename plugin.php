@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plugin Name: Test Plugin
  * Author:      William Roberts
@@ -6,7 +7,6 @@
  * Version: 0.1.1
  * Text Domain: test-plugin 
  */
-
 use Dhii\Cache\MemoryMemoizer;
 use Dhii\Di\CachingContainer;
 use Develon674\TestSite2\MyPlugin;

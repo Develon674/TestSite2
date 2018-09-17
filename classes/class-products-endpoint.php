@@ -7,7 +7,7 @@ use WP_REST_Request;
 use WP_Query;
 
 /**
- * Description of class-rest-api-endpoints
+ * Creates endpoint for post type
  *
  */
 class Products_Endpoint {
