@@ -43,6 +43,7 @@ class Products_Endpoint {
                     ],
                     'order' => [
                         'type' => 'string',
+                        'default' => 'ASC',
                         'enum' => [
                             'ASC',
                             'DESC',
@@ -53,6 +54,7 @@ class Products_Endpoint {
                     ],
                     'orderby' => [
                         'type' => 'string',
+                        'default' => 'date',
                         'validate_callback' => function($param) {
                             return (is_numeric($param) ? false : true);
                         },
