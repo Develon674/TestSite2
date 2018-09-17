@@ -41,6 +41,22 @@ class Products_Endpoint {
                         'minimum' => 1,
                         'maximum' => 100,
                     ],
+                    'order' => [
+                        'type' => 'string',
+                        'enum' => [
+                            'ASC',
+                            'DESC',
+                        ],
+                        'validate_callback' => function($param) {
+                            return (is_numeric($param) ? false : true);
+                        },
+                    ],
+                    'orderby' => [
+                        'type' => 'string',
+                        'validate_callback' => function($param) {
+                            return (is_numeric($param) ? false : true);
+                        },
+                    ],
                 ],
             ],
         ]);
@@ -51,8 +67,8 @@ class Products_Endpoint {
             'post_type' => 'post',
             'posts_per_page' => $request->get_param('posts_per_page'),
             'paged' => $request->get_param('page'),
-            'orderby' => 'date',
-            'order' => 'DESC'
+            'orderby' => $request->get_param('orderby'),
+            'order' => $request->get_param('order'),
         ];
         return $this->query->query($args);
     }
