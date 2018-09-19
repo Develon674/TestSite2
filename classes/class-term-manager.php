@@ -42,5 +42,5 @@ class Term_Manager {
         }
         return $branch;
     }
-
+    
 }
