@@ -30,6 +30,7 @@ return function(string $root_path, string $base_url) {
         'root_path' => $root_path,
         'base_url' => $base_url,
         'version' => '0.1',
+        'shortcode_tag_name' => 'products'
     ];
 };
 

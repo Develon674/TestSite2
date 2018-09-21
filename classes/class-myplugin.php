@@ -38,6 +38,12 @@ class MyPlugin {
         });
         add_action('init', function() {
             $this->registerAssets();
+            add_shortcode($this->getConfig('shortcode_tag_name'), function($params, $content = '') {
+                if (empty($params)) {
+                    $params = [];
+                }
+                return $this->getShortcodeOutput($params, $content);
+            });
         });
         add_action('wp_enqueue_scripts', function() {
             $this->enqueueAssets();
@@ -45,7 +51,7 @@ class MyPlugin {
     }
 
     protected function registerAssets() {
-        wp_register_script('product-page-js', $this->getUrl('assets/js/products.js'), ['backbone'], $this->container->get('version'));
+        wp_register_script('product-page-js', $this->getUrl('assets/js/products.js'), ['backbone', 'underscore'], $this->getConfig('version'));
     }
 
     protected function enqueueAssets() {
@@ -92,6 +98,17 @@ class MyPlugin {
     protected function printOutput() {
         $output = $this->getOutput();
         return $this->printTerms($output);
+    }
+
+    /**
+     *
+     * @param array $params
+     * @param string $content
+     * @return string
+     */
+    protected function getShortcodeOutput(array $params, $content = '') {
+        $template = $this->getTemplate('shortcode');
+        return $template->render($params);
     }
 
 }
