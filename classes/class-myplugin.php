@@ -22,6 +22,20 @@ class MyPlugin {
             $productsEndpoint = $this->container->get('products_endpoint');
             $productsEndpoint->register_routes();
         });
+        add_action('init', function() {
+            $this->registerAssets();
+        });
+        add_action('wp_enqueue_scripts', function() {
+            $this->enqueueAssets();
+        });
+    }
+
+    protected function registerAssets() {
+        wp_register_script('product-page-js', $this->getUrl('assets/js/products.js'), ['backbone'], $this->container->get('version'));
+    }
+
+    protected function enqueueAssets() {
+        wp_enqueue_script('product-page-js');
     }
 
     protected function getUrl($path = '') {
