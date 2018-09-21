@@ -18,6 +18,12 @@ class MyPlugin {
         return $this->container->get($key);
     }
 
+    protected function getTemplate($key) {
+        $templateFactory = $this->getConfig('template_factory');
+        $template = $templateFactory($key);
+        return $template;
+    }
+
     public function run() {
         add_action('product_finder_body', function() {
             echo $this->printOutput();
@@ -54,8 +60,7 @@ class MyPlugin {
      * @return array Returns list of categories in array.
      */
     protected function printTerms($terms) {
-        $templateFactory = $this->getConfig('template_factory');
-        $template = $templateFactory('terms');
+        $template = $this->getTemplate('terms');
         echo $template->render(['terms' => $terms]);
     }
 
