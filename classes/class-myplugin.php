@@ -24,6 +24,13 @@ class MyPlugin {
         });
     }
 
+    protected function getUrl($path = '') {
+        $baseUrl = rtrim($this->container->get('base_url'), '/');
+        $path = ltrim($path, '/');
+
+        return "$baseUrl/$path";
+    }
+
     /**
      * @param WP_Term[] $terms A list of categories.
      * @return array Returns list of categories in array.
