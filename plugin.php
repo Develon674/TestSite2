@@ -17,11 +17,11 @@ $services = require('services.php');
 
 $cache = new MemoryMemoizer();
 
-$container = new CachingContainer($services(__DIR__), $cache);
+$plugin_file = __FILE__;
+$plugin_dir = dirname($plugin_file);
+
+$container = new CachingContainer($services($plugin_dir, plugins_url('', $plugin_file)), $cache);
 
 $plugin = new MyPlugin($container);
-
-
-
 
 $plugin->run();

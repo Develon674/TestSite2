@@ -5,7 +5,7 @@ use Develon674\TestSite2\Template;
 use Develon674\TestSite2\Term_Manager;
 use Develon674\TestSite2\Products_Endpoint;
 
-return function(string $root_path) {
+return function(string $root_path, string $base_url) {
 
     return [
         'template_factory' => function(ContainerInterface $container) {
