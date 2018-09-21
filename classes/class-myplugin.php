@@ -9,6 +9,7 @@ use WP_Term_Query;
 class MyPlugin {
 
     protected $container;
+    protected $templateCache = [];
 
     public function __construct(ContainerInterface $container) {
         $this->container = $container;
@@ -19,9 +20,12 @@ class MyPlugin {
     }
 
     protected function getTemplate($key) {
-        $templateFactory = $this->getConfig('template_factory');
-        $template = $templateFactory($key);
-        return $template;
+        if (!isset($this->templateCache[$key])) {
+            $templateFactory = $this->getConfig('template_factory');
+            $template = $templateFactory($key);
+            $this->templateCache[$key] = $template;
+        }
+        return $this->templateCache[$key];
     }
 
     public function run() {
