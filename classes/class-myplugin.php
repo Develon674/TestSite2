@@ -14,12 +14,16 @@ class MyPlugin {
         $this->container = $container;
     }
 
+    protected function getConfig($key) {
+        return $this->container->get($key);
+    }
+
     public function run() {
         add_action('product_finder_body', function() {
             echo $this->printOutput();
         });
         add_action('rest_api_init', function() {
-            $productsEndpoint = $this->container->get('products_endpoint');
+            $productsEndpoint = $this->getConfig('products_endpoint');
             $productsEndpoint->register_routes();
         });
         add_action('init', function() {
@@ -39,7 +43,7 @@ class MyPlugin {
     }
 
     protected function getUrl($path = '') {
-        $baseUrl = rtrim($this->container->get('base_url'), '/');
+        $baseUrl = rtrim($this->getConfig('base_url'), '/');
         $path = ltrim($path, '/');
 
         return "$baseUrl/$path";
@@ -50,7 +54,7 @@ class MyPlugin {
      * @return array Returns list of categories in array.
      */
     protected function printTerms($terms) {
-        $templateFactory = $this->container->get('template_factory');
+        $templateFactory = $this->getConfig('template_factory');
         $template = $templateFactory('terms');
         echo $template->render(['terms' => $terms]);
     }
@@ -69,7 +73,7 @@ class MyPlugin {
     }
 
     protected function getOutput() {
-        $indexTerms = $this->container->get('term_manager');
+        $indexTerms = $this->getConfig('term_manager');
         $terms = $this->getTerms();
         $index = $indexTerms->indexTermsById($terms);
         $tree = $indexTerms->getTermTree($index);
