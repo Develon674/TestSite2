@@ -1,44 +1,38 @@
 (function ($, B) {
 
+    var products = myplugin_products,
+            url = products.url,
+            route = products.route;
+            
+            console.log(url+route);
+
     // Create the model that contain defaults
-    var Person = B.Model.extend({
-        defaults: {
-            name: 'John Doe',
-            dob: '11th September 2001',
-            location: 'WTC, New York, USA',
-            profession: 'Janitor',
-        }
+    var productModel = B.Model.extend({});
+
+    var productCollection = B.Collection.extend({
+        model: productModel,
+        url: url + route,
     });
 
-    // Create a new instance of the model
-    var john = new Person({name: 'John Doe', dob: '10th March 2002', location: 'Texas, USA', profession: 'Developer'});
-    var ben = new Person({name: 'Ben Dover', dob: '10th March 1991', location: 'London, UK', profession: 'Musician'});
-
-    let Persons = B.Collection.extend({
-        model: Person
-    });
-
-    var personsArray = [john, ben];
-
-    var persons = new Persons(personsArray);
-
-    var PersonListView = B.View.extend({
+    var ProductListView = B.View.extend({
         el: '.myplugin-shortcode-container',
 
         initialize: function () {
+            this.collection = new productCollection();
             this.template = _.template($('#myplugin-list-template').html());
             this.render();
-
-            console.log('init');
         },
 
         render: function () {
-            this.$el.html(this.template({persons: persons.models}));
+            this.collection.fetch();
+            console.log(this.collection.models);
+            this.$el.html(this.template({items: this.collection.models}));
+
         }
     });
-    
+
     $(function () {
-        var personListView = new PersonListView();
+        var productListView = new ProductListView();
     });
 
 }(jQuery, Backbone));

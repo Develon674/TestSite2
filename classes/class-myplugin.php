@@ -29,6 +29,7 @@ class MyPlugin {
     }
 
     public function run() {
+
         add_action('product_finder_body', function() {
             echo $this->printOutput();
         });
@@ -55,7 +56,13 @@ class MyPlugin {
     }
 
     protected function enqueueAssets() {
+        $productsEndpoint = $this->getConfig('products_endpoint');
         wp_enqueue_script('product-page-js');
+        wp_localize_script('product-page-js', 'myplugin_products', [
+            'route' => $productsEndpoint->route_path(),
+            'url' => get_rest_url()
+                ]
+        );
     }
 
     protected function getUrl($path = '') {

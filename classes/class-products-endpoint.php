@@ -13,17 +13,20 @@ use WP_Query;
 class Products_Endpoint {
 
     protected $query;
+    protected $namespace = "myplugin/v1";
+    protected $base = '/products/';
 
     public function __construct(WP_Query $query) {
         $this->query = $query;
     }
 
-    public function register_routes() {
-        $version = '1';
-        $namespace = "myplugin/v$version";
-        $base = '/products/';
+    public function route_path() {
+        return "$this->namespace$this->base";
+    }
 
-        register_rest_route($namespace, $base, [
+    public function register_routes() {
+
+        register_rest_route($this->namespace, $this->base, [
             [
                 'methods' => WP_REST_Server::READABLE,
                 'callback' => function(WP_REST_Request $request) {
