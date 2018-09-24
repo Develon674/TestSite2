@@ -32,6 +32,14 @@ class Term_Manager {
         foreach ($terms as $term) {
             /* @var $term WP_Term */
             if ($term->parent == $parentId) {
+                $question = $this->getTermMeta($term->term_id, 'posts_term_question');
+                $answer = $this->getTermMeta($term->term_id, 'posts_term_answer');
+                if ($question) {
+                    $term->question = $question;
+                }
+                if ($answer) {
+                    $term->answer = $answer;
+                }
                 $children = $this->getTermTree($terms, $term->term_id);
                 if ($children) {
                     $term->children = $children;
@@ -41,6 +49,10 @@ class Term_Manager {
             }
         }
         return $branch;
+    }
+
+    protected function getTermMeta($id, $key) {
+        return get_term_meta($id, $key, true);
     }
     
 }
