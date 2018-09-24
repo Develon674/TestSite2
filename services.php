@@ -22,7 +22,7 @@ return function(string $root_path, string $base_url) {
             $queryFactory = $container->get('query_factory');
             $post_type = $container->get('post_type');
             $query = $queryFactory();
-            return new Products_Endpoint($query);
+            return new Products_Endpoint($query, $post_type);
         },
         'query_factory' => function() {
             return function() {
@@ -37,7 +37,9 @@ return function(string $root_path, string $base_url) {
         'root_path' => $root_path,
         'base_url' => $base_url,
         'version' => '0.1',
-        'shortcode_tag_name' => 'products'
+        'post_type' => 'product',
+        'shortcode_tag_name' => 'products',
+        'text_domain' => 'myplugin',
     ];
 };
 
