@@ -86,6 +86,8 @@ class Products_Endpoint {
             $thumbnail = get_the_post_thumbnail_url($entity->ID, 'full');
             if ($thumbnail) {
             $entity->post_thumbnail_url = $thumbnail;
+            } else {
+            $entity->post_thumbnail_url = "";    
             }
             $entity->post_content = apply_filters('the_content', $entity->post_content);
             $query[] = $entity;
