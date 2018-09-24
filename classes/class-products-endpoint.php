@@ -77,7 +77,17 @@ class Products_Endpoint {
             'orderby' => $request->get_param('orderby'),
             'order' => $request->get_param('order'),
         ];
-        return $this->query->query($args);
+        $query = $this->modifyEntities($this->query->query($args));
+        return $query;
+    }
+
+    protected function modifyEntities($entities) {
+        foreach ($entities as $entity) {
+            $entity->post_thumbnail_url = get_the_post_thumbnail_url($entity->ID, 'full');
+            $entity->post_content = apply_filters('the_content', $entity->post_content);
+            $query[] = $entity;
+        }
+        return $query;
     }
 
 }
