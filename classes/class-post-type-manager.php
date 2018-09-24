@@ -11,7 +11,6 @@ class Post_Type_Manager {
 
     protected $cpt_name;
     protected $cpt_args;
-    protected $cpt_labels;
     protected $text_domain;
 
     public function __construct(string $text_domain, string $cpt_name, array $cpt_args = []) {
