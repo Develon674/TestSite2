@@ -20,8 +20,10 @@ class Products_Endpoint {
         $this->query = $query;
     }
 
-    public function route_path() {
-        return "$this->namespace$this->base";
+    public function routePath() {
+        $namespace = rtrim($this->namespace, '/');
+        $base = ltrim($this->base, '/');
+        return "$namespace/$base";
     }
 
     public function register_routes() {
