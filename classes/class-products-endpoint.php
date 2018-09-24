@@ -26,13 +26,13 @@ class Products_Endpoint {
         return "$namespace/$base";
     }
 
-    public function register_routes() {
+    public function registerRoutes() {
 
         register_rest_route($this->namespace, $this->base, [
             [
                 'methods' => WP_REST_Server::READABLE,
                 'callback' => function(WP_REST_Request $request) {
-                    return $this->get_entities($request);
+                    return $this->getEntities($request);
                 },
                 'args' => [
                     'page' => [
@@ -69,7 +69,7 @@ class Products_Endpoint {
         ]);
     }
 
-    protected function get_entities(WP_REST_Request $request) {
+    protected function getEntities(WP_REST_Request $request) {
         $args = [
             'post_type' => 'post',
             'posts_per_page' => $request->get_param('posts_per_page'),

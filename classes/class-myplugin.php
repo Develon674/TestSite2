@@ -30,12 +30,13 @@ class MyPlugin {
 
     public function run() {
 
+        $productsEndpoint = $this->getConfig('products_endpoint');
+
         add_action('product_finder_body', function() {
             echo $this->printOutput();
         });
-        add_action('rest_api_init', function() {
-            $productsEndpoint = $this->getConfig('products_endpoint');
-            $productsEndpoint->register_routes();
+        add_action('rest_api_init', function() use ($productsEndpoint) {
+            $productsEndpoint->registerRoutes();
         });
         add_action('init', function() {
             $this->registerAssets();
@@ -46,8 +47,8 @@ class MyPlugin {
                 return $this->getShortcodeOutput($params, $content);
             });
         });
-        add_action('wp_enqueue_scripts', function() {
-            $this->enqueueAssets();
+        add_action('wp_enqueue_scripts', function() use($productsEndpoint) {
+            $this->enqueueAssets($productsEndpoint);
         });
     }
 
@@ -55,12 +56,11 @@ class MyPlugin {
         wp_register_script('product-page-js', $this->getUrl('assets/js/products.js'), ['backbone', 'underscore'], $this->getConfig('version'));
     }
 
-    protected function enqueueAssets() {
-        $productsEndpoint = $this->getConfig('products_endpoint');
+    protected function enqueueAssets($endpoint) {
         wp_enqueue_script('product-page-js');
         wp_localize_script('product-page-js', 'myplugin_products', [
-            'route' => $productsEndpoint->route_path(),
-            'url' => get_rest_url()
+            'url' => get_rest_url(null, $endpoint->routePath()),
+            'terms' => $this->getOutput(),
                 ]
         );
     }
