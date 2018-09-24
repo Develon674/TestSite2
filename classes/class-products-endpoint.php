@@ -83,7 +83,10 @@ class Products_Endpoint {
 
     protected function modifyEntities($entities) {
         foreach ($entities as $entity) {
-            $entity->post_thumbnail_url = get_the_post_thumbnail_url($entity->ID, 'full');
+            $thumbnail = get_the_post_thumbnail_url($entity->ID, 'full');
+            if ($thumbnail) {
+            $entity->post_thumbnail_url = $thumbnail;
+            }
             $entity->post_content = apply_filters('the_content', $entity->post_content);
             $query[] = $entity;
         }
