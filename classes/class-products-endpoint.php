@@ -14,21 +14,25 @@ class Products_Endpoint {
 
     protected $query;
     protected $namespace = "myplugin/v1";
-    protected $base = '/products/';
+    protected $name;
 
-    public function __construct(WP_Query $query) {
+    public function __construct(WP_Query $query, string $name = 'post') {
         $this->query = $query;
+        $this->name = $name;
     }
-
+    
+    protected function filterName() {
+        return strtolower($this->name);
+    }
+    
     public function routePath() {
         $namespace = rtrim($this->namespace, '/');
-        $base = ltrim($this->base, '/');
-        return "$namespace/$base";
+        return "$namespace/{$this->filterName()}/";
     }
 
     public function registerRoutes() {
 
-        register_rest_route($this->namespace, $this->base, [
+        register_rest_route($this->namespace, "/{$this->filterName()}/", [
             [
                 'methods' => WP_REST_Server::READABLE,
                 'callback' => function(WP_REST_Request $request) {
@@ -71,7 +75,7 @@ class Products_Endpoint {
 
     protected function getEntities(WP_REST_Request $request) {
         $args = [
-            'post_type' => 'post',
+            'post_type' => $this->filterName(),
             'posts_per_page' => $request->get_param('posts_per_page'),
             'paged' => $request->get_param('page'),
             'orderby' => $request->get_param('orderby'),

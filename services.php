@@ -4,6 +4,7 @@ use Psr\Container\ContainerInterface;
 use Develon674\TestSite2\Template;
 use Develon674\TestSite2\Term_Manager;
 use Develon674\TestSite2\Products_Endpoint;
+use Develon674\TestSite2\Post_Type_Manager;
 
 return function(string $root_path, string $base_url) {
 
@@ -19,6 +20,7 @@ return function(string $root_path, string $base_url) {
         },
         'products_endpoint' => function(ContainerInterface $container) {
             $queryFactory = $container->get('query_factory');
+            $post_type = $container->get('post_type');
             $query = $queryFactory();
             return new Products_Endpoint($query);
         },
@@ -26,6 +28,11 @@ return function(string $root_path, string $base_url) {
             return function() {
                         return new WP_Query();
                     };
+        },
+        'post_type_manager' => function(ContainerInterface $container) {
+            $post_type = $container->get('post_type');
+            $text_domain = $container->get('text_domain');
+            return new Post_Type_Manager($text_domain, $post_type);
         },
         'root_path' => $root_path,
         'base_url' => $base_url,

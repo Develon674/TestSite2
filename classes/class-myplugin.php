@@ -50,6 +50,8 @@ class MyPlugin {
         add_action('wp_enqueue_scripts', function() use($productsEndpoint) {
             $this->enqueueAssets($productsEndpoint);
         });
+        $postType = $this->getConfig('post_type_manager');
+        $postType->run();
     }
 
     protected function registerAssets() {
