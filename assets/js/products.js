@@ -1,38 +1,46 @@
-(function ($, B) {
+(function ($, B, _, options) {
 
-    var products = myplugin_products,
-            url = products.url,
-            route = products.route;
-            
-            console.log(url+route);
+
+    let url = options.url;
+    let lazyload = {check: true, class: 'lazy-load'};
+
+    console.log(url);
 
     // Create the model that contain defaults
-    var productModel = B.Model.extend({});
+    let ProductModel = B.Model.extend({});
 
-    var productCollection = B.Collection.extend({
-        model: productModel,
-        url: url + route,
+    let ProductCollection = B.Collection.extend({
+        model: ProductModel,
+        url: url
     });
+    
 
-    var ProductListView = B.View.extend({
-        el: '.myplugin-shortcode-container',
+    let ProductListView = B.View.extend({
 
-        initialize: function () {
-            this.collection = new productCollection();
-            this.template = _.template($('#myplugin-list-template').html());
-            this.render();
+        initialize: function (options) {
+            this.el = options.el;
+            this.$el = $(this.el);
+            this.collection = options.collection;
+            var me = this;
+            this.collection.bind('update', function(){
+                me.render();
+            });
+            this.template = options.template;
         },
 
         render: function () {
-            this.collection.fetch();
-            console.log(this.collection.models);
-            this.$el.html(this.template({items: this.collection.models}));
-
+            this.$el.html(this.template({items: this.collection.models, lazyload: lazyload}));
         }
     });
 
     $(function () {
-        var productListView = new ProductListView();
+        let collection = new ProductCollection();
+        let productListView = new ProductListView({
+            el: '.myplugin-shortcode-container',
+            collection: collection,
+            template: _.template($('#myplugin-list-template').html())
+        });
+        collection.fetch();
     });
 
-}(jQuery, Backbone));
+}(jQuery, Backbone, _, myplugin_products));
