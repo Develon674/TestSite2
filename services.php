@@ -11,8 +11,8 @@ return function(string $root_path, string $base_url) {
         'template_factory' => function(ContainerInterface $container) {
             $root_path = $container->get('root_path');
             return function(string $template) use($root_path) {
-                        return new Template("$root_path/templates/$template.php");
-                    };
+                return new Template("$root_path/templates/$template.php");
+            };
         },
         'term_manager' => function() {
             return new Term_Manager();
@@ -24,13 +24,14 @@ return function(string $root_path, string $base_url) {
         },
         'query_factory' => function() {
             return function() {
-                        return new WP_Query();
-                    };
+                return new WP_Query();
+            };
         },
         'root_path' => $root_path,
         'base_url' => $base_url,
         'version' => '0.1',
-        'shortcode_tag_name' => 'products'
+        'shortcode_tag_name' => 'products',
+        'root_term_id' => 2,
     ];
 };
 
