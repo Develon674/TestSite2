@@ -34,11 +34,19 @@ return function(string $root_path, string $base_url) {
             $text_domain = $container->get('text_domain');
             return new Post_Type_Manager($text_domain, $post_type);
         },
+        'taxonomy_type_manager' => function(ContainerInterface $container) {
+            $post_type = $container->get('post_type');
+            $text_domain = $container->get('text_domain');
+            return function(string $taxonomy) use ($post_type, $text_domain) {
+                        return new Taxonomy_Type_Manager($text_domain, $post_type, $taxonomy);
+                    };
+        },
         'root_path' => $root_path,
         'base_url' => $base_url,
         'version' => '0.1',
         'post_type' => 'product',
         'shortcode_tag_name' => 'products',
+        'taxonomies' => ['questions', 'answers'],
         'text_domain' => 'myplugin',
     ];
 };
