@@ -47,13 +47,63 @@
         }
     });
 
+    let QuestionTermView = B.View.extend({
+        events: {
+          'click .answer' : 'answerClicked'
+        },
+
+        initialize: function (options) {
+         this.el = options.el;
+         this.$el = $(this.el);
+         this.tree = options.tree;
+         this.currentNode = this.tree;
+         this.collection = options.collection;
+         this.template = options.template;
+       },
+
+       answerClicked: function(event) {
+           let element = event.currentTarget;
+           this.currentNode = $(element).data('term');
+           this.collection.termId = this.currentNode.term_id;
+           this.collection.fetch();
+           this.render();
+       },
+
+       render: function() {
+           this.$el.html(this.template({
+               node: this.currentNode,
+               answers: this.currentNode.children
+           }));
+           let me = this;
+           $('.answer[data-term-id]').each(function() {
+              let that = $(this);
+              let term_id = that.data('term-id');
+              that.data('term', me.currentNode.children[term_id]);
+           });
+       }
+    });
+
+    let selectCategory = function(category) {
+
+    };
+
     $(function () {
         let collection = new ProductCollection();
+
+        let questionTermView = new QuestionTermView({
+            el: '.myplugin-question-container',
+            collection: collection,
+            template: _.template($('#myplugin-question-template').html()),
+            tree: options.term_tree
+        });
+
         let productListView = new ProductListView({
             el: '.myplugin-shortcode-container',
             collection: collection,
             template: _.template($('#myplugin-list-template').html())
         });
+
+        questionTermView.render();
         collection.fetch();
     });
 
