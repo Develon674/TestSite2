@@ -84,19 +84,15 @@ class MyPlugin {
     }
 
     protected function getTerms() {
-        $catQuery = new WP_Term_Query([
-            'taxonomy' => 'category',
-            'hide_empty' => false,
-            'orderby' => 'name',
-            'order' => 'ASC'
-        ]);
-
-        $terms = $catQuery->get_terms();
-
+        $parent_id = $this->getConfig('root_term_id');
+        $term_ids = get_term_children($parent_id, 'category');
+        $term_ids[] = $parent_id;
+        $catQuery = new WP_Term_Query();
+        $terms = $catQuery->query(['taxonomy' => 'category', 'include' => $term_ids, 'hide_empty' => false]);
         return $terms;
     }
 
-    protected function getOutput() {
+    protected function getTermTree() {
         $indexTerms = $this->getConfig('term_manager');
         $terms = $this->getTerms();
         $index = $indexTerms->indexTermsById($terms);
