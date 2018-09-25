@@ -77,17 +77,27 @@ class Products_Endpoint {
             'orderby' => $request->get_param('orderby'),
             'order' => $request->get_param('order'),
         ];
+        if ($request->get_param('term_id')) {
+            $term_id = $request->get_param('term_id');
+            $term_ids = get_term_children($term_id, 'category');
+            $term_ids[] = $term_id;
+            $args['tax_query'] = [
+              [
+                  'taxonomy' => 'category',
+                  'field' => 'term_id',
+                  'terms' => $term_ids,
+                  'operator' => 'IN'
+              ]
+            ];
+        }
         $query = $this->modifyEntities($this->query->query($args));
         return $query;
     }
 
     protected function modifyEntities($entities) {
         foreach ($entities as $entity) {
-            $thumbnail = get_the_post_thumbnail_url($entity->ID, 'full');
-            if ($thumbnail) {
-            $entity->post_thumbnail_url = $thumbnail;
-            }
-            $entity->post_content = apply_filters('the_content', $entity->post_content);
+            $entity->post_thumbnail_url = get_the_post_thumbnail_url($entity->ID, 'full');
+            $entity->post_content = get_the_content($entity);
             $query[] = $entity;
         }
         return $query;
