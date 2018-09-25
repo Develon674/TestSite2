@@ -7,15 +7,15 @@ namespace Develon674\TestSite2;
  *
  * @author Will
  */
-class Post_Type_Manager {
+class Post_Type_Manager implements Type_Interface {
 
-    protected $cpt_name;
-    protected $cpt_args;
+    protected $name;
+    protected $args;
     protected $text_domain;
 
-    public function __construct(string $text_domain, string $cpt_name, array $cpt_args = []) {
-        $this->cpt_name = strtolower($cpt_name);
-        $this->cpt_args = $cpt_args;
+    public function __construct(string $text_domain, string $name, array $args = []) {
+        $this->name = strtolower($name);
+        $this->args = $args;
         $this->text_domain = $text_domain;
     }
 
@@ -31,7 +31,7 @@ class Post_Type_Manager {
 
     protected function create() {
 
-        $single_lower = $this->cpt_name;
+        $single_lower = $this->name;
 
         if (!post_type_exists($single_lower)) {
 
@@ -87,7 +87,7 @@ class Post_Type_Manager {
                 'publicly_queryable' => true,
                 'capability_type' => 'page',
             );
-            register_post_type($single_lower, array_merge($this->cpt_args, $args));
+            register_post_type($single_lower, array_merge($this->args, $args));
         }
     }
 
