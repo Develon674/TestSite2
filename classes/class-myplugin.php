@@ -53,10 +53,12 @@ class MyPlugin {
     }
 
     protected function registerAssets() {
+        wp_register_style('product-page-css', $this->getUrl('assets/css/products.css'), [], $this->getConfig('version'));
         wp_register_script('product-page-js', $this->getUrl('assets/js/products.js'), ['backbone', 'underscore'], $this->getConfig('version'));
     }
 
     protected function enqueueAssets($endpoint) {
+        wp_enqueue_style('product-page-css');
         wp_enqueue_script('product-page-js');
         wp_localize_script('product-page-js', 'myplugin_products', [
             'url' => get_rest_url(null, $endpoint->routePath()),
