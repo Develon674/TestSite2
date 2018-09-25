@@ -52,6 +52,8 @@ class MyPlugin {
         });
         $postType = $this->getConfig('post_type_manager');
         $postType->run();
+        $taxonomyFactory = $this->getConfig('taxonomy_type_manager');
+        
     }
 
     protected function registerAssets() {
