@@ -61,9 +61,9 @@ class MyPlugin {
         wp_enqueue_style('product-page-css');
         wp_enqueue_script('product-page-js');
         wp_localize_script('product-page-js', 'myplugin_products', [
-            'url' => get_rest_url(null, $endpoint->routePath()),
-            'terms' => $this->getOutput(),
-                ]
+                'url' => get_rest_url(null, $endpoint->routePath()),
+                'term_tree' => $this->getTermTree(),
+            ]
         );
     }
 
@@ -105,7 +105,7 @@ class MyPlugin {
     }
 
     protected function printOutput() {
-        $output = $this->getOutput();
+        $output = $this->getTermTree();
         return $this->printTerms($output);
     }
 
