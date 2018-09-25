@@ -98,9 +98,9 @@
         });
 
         let productListView = new ProductListView({
-            el: '.myplugin-shortcode-container',
+            el: '.myplugin-products-container',
             collection: collection,
-            template: _.template($('#myplugin-list-template').html())
+            template: _.template($('#myplugin-products-template').html())
         });
 
         questionTermView.render();

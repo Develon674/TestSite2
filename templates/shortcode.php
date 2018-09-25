@@ -1,5 +1,6 @@
-<div class="myplugin-shortcode-container"></div>
-<script type="text/template" id="myplugin-list-template">
+<div class="myplugin-question-container"></div>
+<div class="myplugin-products-container"></div>
+<script type="text/template" id="myplugin-products-template">
 <% _.each(items, function(item) { %>
 <div>
 <% if (item.get('post_thumbnail_url')) { %>
@@ -15,4 +16,19 @@
 <% } %>
 </div>
 <% }); %>
+</script>
+
+<script type="text/template" id="myplugin-question-template">
+<div class="question-tree">
+    <div class="question"><%= node.question %></div>
+    <div class="answers">
+    <ul>
+        <% _.each(answers, function(answer) { %>
+        <li>
+            <div class="answer" data-term-id="<%= answer.term_id %>"><%= answer.answer %></div>
+        </li>
+        <% }); %>
+    </ul>
+    </div>
+</div>
 </script>
