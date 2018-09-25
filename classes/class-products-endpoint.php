@@ -42,7 +42,7 @@ class Products_Endpoint {
                     ],
                     'posts_per_page' => [
                         'type' => 'integer',
-                        'default' => 2,
+                        'default' => 10,
                         'minimum' => 1,
                         'maximum' => 100,
                     ],
