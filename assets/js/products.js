@@ -11,7 +11,21 @@
 
     let ProductCollection = B.Collection.extend({
         model: ProductModel,
-        url: url
+        urlRoot: url,
+        termId: null,
+
+        url: function() {
+            let url = new URL( this.urlRoot );
+            let params = url.searchParams;
+
+            if ( this.termId ) {
+                params.set( 'term_id', this.termId );
+            }
+
+            url.search = '?' + params.toString();
+
+            return url.toString();
+        }
     });
     
 
