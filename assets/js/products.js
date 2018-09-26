@@ -47,52 +47,138 @@
         }
     });
 
+    let SelectionsManager = B.Model.extend({
+        selectionsList: [],
+        
+        initialize: function (args) {
+            this.collection = args.collection;
+        },
+        
+        selectItem: function (answer) {
+            let curItem = this.getCurrentItem();
+            let item = {answer: answer};
+            if (curItem) {
+                item.question = curItem.answer
+            }
+            this.selectionsList.push(item);
+
+            this.collection.termId = answer.term_id;
+            this.collection.fetch();
+            
+            this.trigger('item_selected', [answer]);
+        },
+        selectPrevItem_: function (question) {
+            let index = this.selectionsList.findIndex(function (element) {
+                element.question == question;
+            });
+            let item = this.selectionsList[index];
+            let question = item.question;
+            for (
+                    let i = this.selectionsList.length - 1; // Happens in the beginning
+                    i > index; // Has to be true for loop to continue
+                    i-- // Happens at end of each iteration
+                    ) {
+                this.selectionsList.pop();
+            }
+        },
+        selectPrevItem: function (index) {
+            let item = this.selectionsList[index];
+            let answer = item.answer;
+            for (
+                    let i = this.selectionsList.length - 1; // Happens in the beginning
+                    i > index; // Has to be true for loop to continue
+                    i-- // Happens at end of each iteration
+                    ) {
+                this.selectionsList.pop();
+            }
+            this.selectItem(answer);
+        },
+        getCurrentItem: function () {
+            return this.selectionsList.slice(-1)[0];
+        },
+        getSelections: function () {
+            return this.selectionsList.slice(1, this.selectionsList.length);
+        }
+    });
+
     let QuestionTermView = B.View.extend({
         events: {
-          'click .answer' : 'answerClicked'
+            'click .answer': 'answerClicked'
         },
 
         initialize: function (options) {
-         this.el = options.el;
-         this.$el = $(this.el);
-         this.tree = options.tree;
-         this.currentNode = this.tree;
-         this.collection = options.collection;
-         this.template = options.template;
-       },
+            this.el = options.el;
+            this.$el = $(this.el);
+            this.tree = options.tree;
+            this.template = options.template;
+            this.selections = options.selections;
+            
+            let me = this;
+            this.selections.on('item_selected', function (term) {
+                me.render();
+            });
+        },
 
-       answerClicked: function(event) {
-           let element = event.currentTarget;
-           this.currentNode = $(element).data('term');
-           this.collection.termId = this.currentNode.term_id;
-           this.collection.fetch();
-           this.render();
-       },
+        answerClicked: function (event) {
+            let element = event.currentTarget;
+            this.selections.selectItem($(element).data('term'));
+        },
 
-       render: function() {
-           this.$el.html(this.template({
-               node: this.currentNode,
-               answers: this.currentNode.children
-           }));
-           let me = this;
-           $('.answer[data-term-id]').each(function() {
-              let that = $(this);
-              let term_id = that.data('term-id');
-              that.data('term', me.currentNode.children[term_id]);
-           });
-       }
+        render: function () {
+            let current = this.selections.getCurrentItem().answer;
+            this.$el.html(this.template({
+                node: current,
+                answers: current.children,
+            }));
+            let me = this;
+            $('.answer[data-term-id]').each(function () {
+                let that = $(this);
+                let term_id = that.data('term-id');
+                that.data('term', current.children[term_id]);
+            });
+        }
     });
 
-    let selectCategory = function(category) {
+    let SelectionsView = B.View.extend({
+        events: {
+            'click li': 'selectionClicked',
+        },
+        
+        initialize: function (options) {
+            this.el = options.el;
+            this.$el = $(this.el);
+            this.selections = options.selections;
+            this.template = options.template;
+            
+            let me = this;
+            this.selections.on('item_selected', function (term) {
+                me.render();
+            });
+        },
 
-    };
+        render: function () {
+            this.$el.html(this.template({
+                selections: this.selections.getSelections(),
+            }));
+        },
+        
+        selectionClicked: function (event) {
+            let el = event.currentTarget;
+            let index = $(el).index();
+            this.selections.selectPrevItem(index);
+        },
+    });
 
     $(function () {
         let collection = new ProductCollection();
+        let selections = new SelectionsManager({
+            collection: collection,
+        });
 
         let questionTermView = new QuestionTermView({
             el: '.myplugin-question-container',
             collection: collection,
+            selections: selections,
             template: _.template($('#myplugin-question-template').html()),
             tree: options.term_tree
         });
@@ -103,8 +189,15 @@
             template: _.template($('#myplugin-products-template').html())
         });
 
-        questionTermView.render();
-        collection.fetch();
+        let selectionsView = new SelectionsView({
+            el: '.myplugin-selections-container',
+            selections: selections,
+            template: _.template($('#myplugin-selections-template').html())
+        });
+
+        selections.selectItem(options.term_tree);
+        //questionTermView.render();
+        //collection.fetch();
     });
 
 }(jQuery, Backbone, _, myplugin_products));

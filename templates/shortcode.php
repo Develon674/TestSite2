@@ -1,3 +1,4 @@
+<div class="myplugin-selections-container"></div>
 <div class="myplugin-question-container"></div>
 <div class="myplugin-products-container"></div>
 <script type="text/template" id="myplugin-products-template">
@@ -30,5 +31,18 @@
         <% }); %>
     </ul>
     </div>
+</div>
+</script>
+
+<script type="text/template" id="myplugin-selections-template">
+<div class="selections">
+    <ul>
+    <% _.each(selections, function(selection) { %>
+        <li>
+            <div class="question"><%= selection.question.question %></div>
+            <div class="answer"><%= selection.answer.answer %></div>
+        </li>
+    <% }); %>
+    </ul>
 </div>
 </script>
