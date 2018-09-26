@@ -14,12 +14,12 @@
         urlRoot: url,
         termId: null,
 
-        url: function() {
-            let url = new URL( this.urlRoot );
+        url: function () {
+            let url = new URL(this.urlRoot);
             let params = url.searchParams;
 
-            if ( this.termId ) {
-                params.set( 'term_id', this.termId );
+            if (this.termId) {
+                params.set('term_id', this.termId);
             }
 
             url.search = '?' + params.toString();
@@ -27,7 +27,7 @@
             return url.toString();
         }
     });
-    
+
 
     let ProductListView = B.View.extend({
 
@@ -36,7 +36,7 @@
             this.$el = $(this.el);
             this.collection = options.collection;
             var me = this;
-            this.collection.bind('update', function(){
+            this.collection.bind('update', function () {
                 me.render();
             });
             this.template = options.template;
