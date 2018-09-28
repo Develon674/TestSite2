@@ -21,7 +21,9 @@ $plugin_file = __FILE__;
 $plugin_dir = dirname($plugin_file);
 
 $container = new CachingContainer($services($plugin_dir, plugins_url('', $plugin_file)), $cache);
+$composite = $container->get('composite');
 
-$plugin = new MyPlugin($container);
+$plugin = new MyPlugin($composite);
 
 $plugin->run();
+update_option('root_term_id', '2', true);
