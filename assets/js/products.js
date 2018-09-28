@@ -72,7 +72,7 @@
             let answer = item.answer;
             for (
                     let i = this.selectionsList.length - 1; // Happens in the beginning
-                    i > index; // Has to be true for loop to continue
+                    i >= index; // Has to be true for loop to continue
                     i-- // Happens at end of each iteration
                     ) {
                 this.selectionsList.pop();
