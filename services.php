@@ -27,6 +27,11 @@ return function(string $root_path, string $base_url) {
                 return new WP_Query();
             };
         },
+        'term_query_factory' => function() {
+            return function() {
+                return new WP_Term_Query();
+            };
+        },
         'root_path' => $root_path,
         'base_url' => $base_url,
         'version' => '0.1',
