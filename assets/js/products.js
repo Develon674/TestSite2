@@ -67,20 +67,6 @@
             
             this.trigger('item_selected', [answer]);
         },
-        selectPrevItem_: function (question) {
-            let index = this.selectionsList.findIndex(function (element) {
-                element.question == question;
-            });
-            let item = this.selectionsList[index];
-            let question = item.question;
-            for (
-                    let i = this.selectionsList.length - 1; // Happens in the beginning
-                    i > index; // Has to be true for loop to continue
-                    i-- // Happens at end of each iteration
-                    ) {
-                this.selectionsList.pop();
-            }
-        },
         selectPrevItem: function (index) {
             let item = this.selectionsList[index];
             let answer = item.answer;
