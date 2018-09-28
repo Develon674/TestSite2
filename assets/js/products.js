@@ -58,7 +58,7 @@
             let curItem = this.getCurrentItem();
             let item = {answer: answer};
             if (curItem) {
-                item.question = curItem.answer
+                item.question = curItem.answer;
             }
             this.selectionsList.push(item);
 
