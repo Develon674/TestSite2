@@ -11,7 +11,8 @@
     "minimum-stability": "dev",
     "require": {
         "dhii/di" : "^0.2",
-        "dhii/memoize-memory" : "^0.2"
+        "dhii/memoize-memory" : "^0.2",
+        "dhii/composite-container" : "^0.1-alpha1"
     },
     "autoload" : {
         "classmap" : [

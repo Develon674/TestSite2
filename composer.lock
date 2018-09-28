@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c4bc97f75728b6a60ee79f27dd27f333",
+    "content-hash": "5b4ffe7f7771c890033f4cfe00e0bd69",
     "packages": [
         {
             "name": "dhii/args-list-validation",
@@ -213,6 +213,60 @@
             ],
             "description": "A highly ISP-compliant collection of interfaces that represent maps and lists.",
             "time": "2018-04-26T13:04:16+00:00"
+        },
+        {
+            "name": "dhii/composite-container",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Dhii/composite-container.git",
+                "reference": "e04113b2113cf055750908b56d8fbc6ec252e2fc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Dhii/composite-container/zipball/e04113b2113cf055750908b56d8fbc6ec252e2fc",
+                "reference": "e04113b2113cf055750908b56d8fbc6ec252e2fc",
+                "shasum": ""
+            },
+            "require": {
+                "dhii/container-helper-base": "^0.1-alpha7",
+                "dhii/data-container-base": "^0.1-alpha2",
+                "dhii/data-container-interface": "^0.1 | ^0.2",
+                "dhii/exception": "^0.1-alpha5",
+                "dhii/i18n-helper-base": "^0.1",
+                "dhii/normalization-helper-base": "^0.1",
+                "php": "^5.4 | ^7.0"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "<=0.3.2",
+                "dhii/php-cs-fixer-config": "^0.1",
+                "phpunit/phpunit": "^4.8",
+                "psr/container": "^1.0",
+                "ptrofimov/xpmock": "^1.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "0.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dhii\\Data\\Container\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dhii Team",
+                    "email": "development@dhii.co"
+                }
+            ],
+            "description": "A composite container implementation",
+            "time": "2018-04-11T11:00:55+00:00"
         },
         {
             "name": "dhii/container-helper-base",
