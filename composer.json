@@ -12,7 +12,8 @@
     "require": {
         "dhii/di" : "^0.2",
         "dhii/memoize-memory" : "^0.2",
-        "dhii/composite-container" : "^0.1-alpha1"
+        "dhii/composite-container" : "^0.1-alpha1",
+        "htmlburger/carbon-fields": "dev-master"
     },
     "autoload" : {
         "classmap" : [

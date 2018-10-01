@@ -5,6 +5,7 @@ use Dhii\Data\Container\CompositeContainer;
 use Develon674\TestSite2\Template;
 use Develon674\TestSite2\Term_Manager;
 use Develon674\TestSite2\Products_Endpoint;
+use Develon674\TestSite2\Admin_Fields;
 
 return function(string $root_path, string $base_url) {
 
@@ -40,6 +41,12 @@ return function(string $root_path, string $base_url) {
         'composite' => function(ContainerInterface $c) {
             $options = $c->get('options');
             return new CompositeContainer([$options, $c]);
+        },
+        'default_field_values' => [],
+        'admin_fields' => function(ContainerInterface $c) {
+            $text_domain = $c->get('text_domain');
+            $fields = $c->get('default_field_values');
+            return new Admin_Fields($text_domain, $fields);
         },
         'root_path' => $root_path,
         'base_url' => $base_url,

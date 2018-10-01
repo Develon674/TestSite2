@@ -31,6 +31,7 @@ class MyPlugin {
     public function run() {
 
         $productsEndpoint = $this->getConfig('products_endpoint');
+        $admin_fields = $this->getConfig('admin_fields');
 
         add_action('product_finder_body', function() {
             echo $this->printOutput();
@@ -50,6 +51,7 @@ class MyPlugin {
         add_action('wp_enqueue_scripts', function() use($productsEndpoint) {
             $this->enqueueAssets($productsEndpoint);
         });
+        $admin_fields->run();
     }
 
     protected function registerAssets() {
