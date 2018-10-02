@@ -13,7 +13,7 @@
         "dhii/di" : "^0.2",
         "dhii/memoize-memory" : "^0.2",
         "dhii/composite-container" : "^0.1-alpha1",
-        "htmlburger/carbon-fields": "dev-master"
+        "htmlburger/carbon-fields": "^2.2.0"
     },
     "autoload" : {
         "classmap" : [
