@@ -46,7 +46,9 @@ return function(string $root_path, string $base_url) {
         'admin_fields' => function(ContainerInterface $c) {
             $text_domain = $c->get('text_domain');
             $fields = $c->get('default_field_values');
-            return new Admin_Fields($text_domain, $fields);
+            return function($terms) use($text_domain, $fields) {
+                return new Admin_Fields($text_domain, $fields, $terms);
+            };
         },
         'root_path' => $root_path,
         'base_url' => $base_url,

@@ -51,7 +51,7 @@ class MyPlugin {
         add_action('wp_enqueue_scripts', function() use($productsEndpoint) {
             $this->enqueueAssets($productsEndpoint);
         });
-        $admin_fields->run();
+        $admin_fields($this->queryTerms(['taxonomy' => 'category', 'parent' => 0]))->run();
     }
 
     protected function registerAssets() {
