@@ -20,7 +20,7 @@ class Admin_Fields {
             \Carbon_Fields\Carbon_Fields::boot();
         });
         add_action('carbon_fields_register_fields', function() {
-            $this->createFields();
+            $this->themeOptions();
         });
     }
 
@@ -32,7 +32,7 @@ class Admin_Fields {
         return Field::make($f_type, "{$this->text_domain}_{$f_key}", $f_name);
     }
 
-    protected function createFields() {
+    protected function themeOptions() {
         $top_container = $this->container('theme_options', 'Product Finder');
         $top_container->add_fields([
             $this->field('textarea', 'test_text', 'Test'),
